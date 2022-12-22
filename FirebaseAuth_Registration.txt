@@ -1,0 +1,77 @@
+package com.example.registration;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.text.InputType;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+public class MainActivity extends AppCompatActivity {
+    EditText e1,e2;
+    Button b1;
+    ProgressBar p1;
+    FirebaseAuth firebaseAuth;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        e1 = (EditText) findViewById(R.id.editText);
+        e2 = (EditText) findViewById(R.id.editText2);
+        p1 = (ProgressBar) findViewById(R.id.progressBar);
+        b1 = (Button) findViewById(R.id.button);
+        FirebaseAuth = firebaseAuth.getInstance();
+
+        e2.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String s1 = e1.getText().toString();
+                String s2 = e2.getText().toString();
+                if(s1.isEmpty())
+                {
+                    e1.setError("please fill email id...");
+                    return;
+                }
+                else
+                {
+                    if(s2.isEmpty())
+                    {
+                        e2.setError("please fill password...");
+                    }
+                    else
+                    {
+                        p1.setVisibility(view.Visible);
+
+                        firebaseAuth.createUserWithEmailAndPassword(s1.s2).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if(task.isSuccessful())
+                                {
+                                    Toast.makeText(MainActivity.this, "You are now registered with us......Thankyou", Toast.LENGTH_SHORT).show();
+                                }
+                                else
+                                {
+                                    Toast.makeText(MainActivity.this, "Sorry ....some error happend", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        });
+
+
+    }
+}

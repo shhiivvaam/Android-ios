@@ -1,0 +1,96 @@
+package com.example.realtimedatabase;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+public class MainActivity extends AppCompatActivity {
+    EditText e1,e2,e3;
+    Button b1;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        e1=(EditText) findViewById(R.id.editText);
+        e2=(EditText) findViewById(R.id.editText2);
+        e3=(EditText) findViewById(R.id.editText3);
+        b1=(Button) findViewById(R.id.button);
+
+        firebaseDatabase=firebaseDatabase.getInstance();
+
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                databaseReference=firebaseDatabase.getReference("data");
+                String s1=e1.getText().toString();
+                String s2=e2.getText().toString();
+                String s3=e3.getText().toString();
+
+                if(s3.length()!=10)
+                {
+                    Toast.makeText(MainActivity.this, "please fill atleast 10 digits", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    databaseReference.child(s3).setValue(e3);
+
+                }
+            }
+        });
+
+    }
+}
+
+
+
+// users.java
+
+
+
+public class users{
+    String name,email,phone;
+
+    public users(String name, String email, String phone) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+    public users()
+    {
+        
+    }
+}

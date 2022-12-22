@@ -1,0 +1,63 @@
+TEXT FILE SETTINGS:
+
+
+
+android:textOff="click here to wifi off"
+android:textOn="click here to wifi on"
+android:checked="false"
+
+
+PERMISSIONS:
+
+
+
+<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+
+
+
+CODE:
+
+
+
+
+
+
+package com.example.shivamkumar.togglewifi;
+
+import android.net.wifi.WifiManager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.CompoundButton;
+import android.widget.ToggleButton;
+
+public class MainActivity extends AppCompatActivity {
+    ToggleButton tb;
+    WifiManager wifi;
+    private boolean wify=false;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        tb=(ToggleButton)findViewById(R.id.toggleButton);
+        wifi=(WifiManager)getSystemService(WIFI_SERVICE);
+
+        tb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b)
+                {
+                    wifi.setWifiEnabled(false);
+                    wify=true;
+                }
+                else
+                {
+                    wifi.setWifiEnabled(true);
+                    wify=false;
+                }
+            }
+        });
+    }
+}

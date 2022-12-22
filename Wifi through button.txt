@@ -1,0 +1,52 @@
+PERMISSION:
+
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE">
+    </uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE">
+    </uses-permission>
+
+
+
+
+
+CODE: 
+
+
+
+package com.example.shivamkumar.wifionoff;
+
+import android.net.wifi.WifiManager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+public class MainActivity extends AppCompatActivity {
+    Button b1,b2;
+    WifiManager wifi;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        b1=(Button)findViewById(R.id.button);
+        b2=(Button)findViewById(R.id.button2);
+
+        wifi=(WifiManager) getSystemService(WIFI_SERVICE);
+
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                wifi.setWifiEnabled(true);
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                wifi.setWifiEnabled(false);
+            }
+        });
+
+    }
+}
